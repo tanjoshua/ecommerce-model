@@ -1,10 +1,16 @@
 import React from "react";
 import { View, Text, FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProductDisplay from "../../components/shop/ProductDisplay";
+import { addToCart } from "../../store/actions/cartAction";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../../components/UI/HeaderButton";
 
 // component
 const ProductsOverView = (props) => {
+  // get dispatch function
+  const dispatch = useDispatch();
+
   // render product
   const renderProduct = (itemData) => {
     return (
@@ -18,7 +24,7 @@ const ProductsOverView = (props) => {
             productTitle: itemData.item.title,
           });
         }}
-        onAddToCart={() => {}}
+        onAddToCart={() => dispatch(addToCart(itemData.item))}
       />
     );
   };
@@ -32,6 +38,17 @@ const ProductsOverView = (props) => {
 ProductsOverView.navigationOptions = (navData) => {
   return {
     headerTitle: "Products",
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Cart"
+          iconName="md-cart"
+          onPress={() => {
+            navData.navigation.navigate("Cart");
+          }}
+        />
+      </HeaderButtons>
+    ),
   };
 };
 export default ProductsOverView;
