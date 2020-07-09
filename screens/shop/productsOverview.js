@@ -5,6 +5,7 @@ import ProductDisplay from "../../components/shop/ProductDisplay";
 import { addToCart } from "../../store/actions/cartAction";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
+import Colors from "../../constants/Colors";
 
 // component
 const ProductsOverView = (props) => {
@@ -38,6 +39,18 @@ const ProductsOverView = (props) => {
 ProductsOverView.navigationOptions = (navData) => {
   return {
     headerTitle: "Products",
+
+    // add drawer
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName="md-menu"
+          onPress={() => navData.navigation.toggleDrawer()}
+        />
+      </HeaderButtons>
+    ),
+
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
