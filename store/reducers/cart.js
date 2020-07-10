@@ -55,7 +55,8 @@ export default cartReducer = (state = initialState, action) => {
         items: newCartItems,
         totalCost: state.totalCost - price,
       };
-    //remove from cart
+    case "ADD_ORDER":
+      return initialState;
     default:
       return state;
   }
