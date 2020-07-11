@@ -13,9 +13,11 @@ const CartItem = (props) => {
         </View>
       </View>
 
-      <TouchableOpacity onPress={props.remove}>
-        <Ionicons name="md-trash" size={25} color="red" />
-      </TouchableOpacity>
+      {props.deletable && (
+        <TouchableOpacity onPress={props.remove}>
+          <Ionicons name="md-trash" size={25} color="red" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

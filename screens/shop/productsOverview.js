@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProductDisplay from "../../components/shop/ProductDisplay";
 import { addToCart } from "../../store/actions/cartAction";
@@ -12,6 +12,13 @@ const ProductsOverView = (props) => {
   // get dispatch function
   const dispatch = useDispatch();
 
+  const selectProductHandler = (id, title) => {
+    props.navigation.navigate("ProductDetails", {
+      productId: id,
+      productTitle: title,
+    });
+  };
+
   // render product
   const renderProduct = (itemData) => {
     return (
@@ -19,14 +26,23 @@ const ProductsOverView = (props) => {
         image={itemData.item.imageUrl}
         title={itemData.item.title}
         price={itemData.item.price}
-        onViewDetails={() => {
-          props.navigation.navigate("ProductDetails", {
-            productId: itemData.item.id,
-            productTitle: itemData.item.title,
-          });
+        onSelect={() => {
+          selectProductHandler(itemData.item.id, itemData.item.title);
         }}
-        onAddToCart={() => dispatch(addToCart(itemData.item))}
-      />
+      >
+        <Button
+          color={Colors.primary}
+          title="View Details"
+          onPress={() => {
+            selectProductHandler(itemData.item.id, itemData.item.title);
+          }}
+        />
+        <Button
+          color={Colors.primary}
+          title="To Cart"
+          onPress={() => dispatch(addToCart(itemData.item))}
+        />
+      </ProductDisplay>
     );
   };
 

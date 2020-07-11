@@ -18,6 +18,7 @@ const Cart = (props) => {
         remove={() => {
           dispatch(removeFromCart(itemData.item.id));
         }}
+        deletable
       />
     );
   };

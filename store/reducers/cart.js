@@ -57,6 +57,17 @@ export default cartReducer = (state = initialState, action) => {
       };
     case "ADD_ORDER":
       return initialState;
+    case "DELETE_PRODUCT":
+      if (!state.items[action.id]) {
+        return state;
+      }
+      const updatedItems = { ...state.items };
+      delete updatedItems[action.id];
+      return {
+        ...state,
+        items: updatedItems,
+        totalCost: state.totalCost - state.items[action.id].sum,
+      };
     default:
       return state;
   }
