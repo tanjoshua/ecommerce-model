@@ -10,6 +10,10 @@ const UserProducts = (props) => {
   const products = useSelector((state) => state.products.productsByUser);
   const dispatch = useDispatch();
 
+  const selectProductHandler = (id) => {
+    props.navigation.navigate("EditProduct", { productId: id });
+  };
+
   return (
     <FlatList
       data={products}
@@ -18,14 +22,12 @@ const UserProducts = (props) => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onSelect={() => {}}
+          onSelect={() => selectProductHandler(itemData.item.id)}
         >
           <Button
             color={Colors.primary}
             title="Edit"
-            onPress={() => {
-              selectProductHandler(itemData.item.id, itemData.item.title);
-            }}
+            onPress={() => selectProductHandler(itemData.item.id)}
           />
           <Button
             color={Colors.primary}
@@ -48,6 +50,15 @@ UserProducts.navigationOptions = (navData) => {
           title="Menu"
           iconName="md-menu"
           onPress={() => navData.navigation.toggleDrawer()}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Add"
+          iconName="md-create"
+          onPress={() => navData.navigation.navigate("EditProduct")}
         />
       </HeaderButtons>
     ),
