@@ -1,5 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, TextInput, Text, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 import HeaderButton from "../../components/UI/HeaderButton";
