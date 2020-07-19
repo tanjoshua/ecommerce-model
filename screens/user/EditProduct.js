@@ -34,6 +34,10 @@ const EditProduct = (props) => {
   );
 
   const submitHandler = useCallback(() => {
+    if (!titleIsValid) {
+      Alert.alert("Error", "Wrong Input", [{ text: "Ok" }]);
+      return;
+    }
     if (editedProduct) {
       dispatch(updateProduct(productId, title, description, imageUrl, +price));
       props.navigation.goBack();
@@ -47,6 +51,17 @@ const EditProduct = (props) => {
     props.navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
 
+  //validate title
+  const [titleIsValid, setTitleIsValid] = useState(false);
+  const onTitleChangeHandler = (text) => {
+    if (text.trim().length === 0) {
+      setTitleIsValid(false);
+    } else {
+      setTitleIsValid(true);
+      setTitle(text);
+    }
+  };
+
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -55,7 +70,11 @@ const EditProduct = (props) => {
           <TextInput
             style={styles.input}
             value={title}
-            onChangeText={(text) => setTitle(text)}
+            onChangeText={onTitleChangeHandler}
+            keyboardType="default"
+            autoCapitalize="sentences"
+            autoCorrect
+            returnKeyType="next" // only controls display
           />
         </View>
         <View style={styles.formControl}>
@@ -72,6 +91,7 @@ const EditProduct = (props) => {
             style={styles.input}
             value={price}
             onChangeText={(text) => setPrice(text)}
+            keyboardType="decimal-pad"
           />
         </View>
         <View style={styles.formControl}>
