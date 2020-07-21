@@ -14,6 +14,7 @@ import {
   createProduct,
   updateProduct,
 } from "../../store/actions/productAction";
+import Input from "../../components/UI/Input";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -103,59 +104,60 @@ const EditProduct = (props) => {
   }, [submitHandler]);
 
   // change text handler for all inputs
-  const onTextChangeHandler = (inputIdentifier, text) => {
-    if (text.trim().length === 0) {
-      return;
-    } else {
+  const inputChangeHandler = useCallback(
+    (inputIdentifier, value, isValid) => {
       dispatchForm({
         type: "UPDATE",
-        value: text,
-        isValid: true,
+        value: value,
+        isValid: isValid,
         input: inputIdentifier,
       });
-    }
-  };
+    },
+    [dispatchForm]
+  );
 
   return (
     <ScrollView>
       <View style={styles.form}>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Title</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.title}
-            onChangeText={onTextChangeHandler.bind(this, "title")}
-            keyboardType="default"
-            autoCapitalize="sentences"
-            autoCorrect
-            returnKeyType="next" // only controls display
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Image URL</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.imageUrl}
-            onChangeText={onTextChangeHandler.bind(this, "imageUrl")}
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Price</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.price}
-            onChangeText={onTextChangeHandler.bind(this, "price")}
-            keyboardType="decimal-pad"
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Description</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.description}
-            onChangeText={onTextChangeHandler.bind(this, "description")}
-          />
-        </View>
+        <Input
+          label="Title"
+          id="title"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.title : ""}
+          initialValidity={!!editedProduct} // cast to boolean
+          keyboardType="default"
+          autoCapitalize="sentences"
+          autoCorrect
+          returnKeyType="next" // only controls display
+          required
+        />
+        <Input
+          label="Image Url"
+          id="imageUrl"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.imageUrl : ""}
+          initialValidity={!!editedProduct} // cast to boolean
+          required
+        />
+        <Input
+          label="price"
+          id="price"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.price.toString() : ""}
+          initialValidity={!!editedProduct} // cast to boolean
+          keyboardType="decimal-pad"
+          required
+          min={0}
+        />
+        <Input
+          label="description"
+          id="description"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.description : ""}
+          initialValidity={!!editedProduct} // cast to boolean
+          multiline
+          required
+        />
       </View>
     </ScrollView>
   );
