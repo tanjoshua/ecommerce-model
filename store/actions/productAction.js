@@ -3,9 +3,32 @@ export const deleteProduct = (productId) => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return {
-    type: "CREATE_PRODUCT",
-    productData: { title, description, imageUrl, price },
+  return async (dispatch) => {
+    // send to data
+    const response = await fetch(
+      "https://ecommerce-44026.firebaseio.com/products.json",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          imageUrl,
+          price,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+
+    dispatch({
+      type: "CREATE_PRODUCT",
+      productData: { id: data.name, title, description, imageUrl, price },
+    });
   };
 };
 
