@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, FlatList, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProductDisplay from "../../components/shop/ProductDisplay";
 import { addToCart } from "../../store/actions/cartAction";
+import { fetchProducts } from "../../store/actions/productAction";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
@@ -48,6 +49,10 @@ const ProductsOverView = (props) => {
 
   //get products from redux
   const products = useSelector((state) => state.products.availableProducts);
+  // get products from server
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
   return <FlatList data={products} renderItem={renderProduct} />;
 };
 

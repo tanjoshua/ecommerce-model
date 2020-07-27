@@ -8,4 +8,4 @@ Created with help from the course "React Native - The Practical Guide 2020"
 1. Handling store products - adding, deleting, editing
 2. Features + validation of TextInput
 3. useReducer for forms
-4. Redux thunk to link to firebase server
+4. Redux thunk + using fetch to communicate with firebase server

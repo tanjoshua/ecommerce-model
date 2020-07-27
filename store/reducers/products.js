@@ -59,6 +59,14 @@ export default productsReducer = (state = initialState, action) => {
         availableProducts: updatedProducts,
         productsByUser: updatedUserProducts,
       };
+    case "SET_PRODUCTS":
+      return {
+        ...state,
+        availableProducts: action.products,
+        productsByUser: action.products.filter(
+          (product) => product.ownerId === "u1"
+        ),
+      };
   }
   return state;
 };
