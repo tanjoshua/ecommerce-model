@@ -1,5 +1,12 @@
-import React, { useEffect } from "react";
-import { View, Text, FlatList, Button } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProductDisplay from "../../components/shop/ProductDisplay";
 import { addToCart } from "../../store/actions/cartAction";
@@ -10,6 +17,7 @@ import Colors from "../../constants/Colors";
 
 // component
 const ProductsOverView = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   // get dispatch function
   const dispatch = useDispatch();
 
@@ -49,11 +57,35 @@ const ProductsOverView = (props) => {
 
   //get products from redux
   const products = useSelector((state) => state.products.availableProducts);
+
   // get products from server
   useEffect(() => {
-    dispatch(fetchProducts());
+    setIsLoading(true);
+    // async function to fetch products
+    const getProducts = async () => {
+      await dispatch(fetchProducts());
+      setIsLoading(false);
+    };
+
+    getProducts();
   }, []);
-  return <FlatList data={products} renderItem={renderProduct} />;
+
+  // if loading, show loader, if not show flatlist
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  } else if (!isLoading && products.length === 0) {
+    return (
+      <View style={styles.loading}>
+        <Text>No Products Found!</Text>
+      </View>
+    );
+  } else {
+    return <FlatList data={products} renderItem={renderProduct} />;
+  }
 };
 
 // set nav options
@@ -85,4 +117,13 @@ ProductsOverView.navigationOptions = (navData) => {
     ),
   };
 };
+
+const styles = StyleSheet.create({
+  loading: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+});
+
 export default ProductsOverView;
