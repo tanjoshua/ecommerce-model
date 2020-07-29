@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -59,16 +59,27 @@ const ProductsOverView = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
 
   // get products from server
-  useEffect(() => {
+  // async function to fetch products
+  const getProducts = useCallback(async () => {
     setIsLoading(true);
-    // async function to fetch products
-    const getProducts = async () => {
-      await dispatch(fetchProducts());
-      setIsLoading(false);
-    };
+    await dispatch(fetchProducts());
+    setIsLoading(false);
+  }, [dispatch, setIsLoading]);
 
+  // update drawer navigator if products are changed
+  useEffect(() => {
+    const focusSub = props.navigation.addListener("willFocus", getProducts);
+
+    // clean up function to remove listener after component is gone
+    return () => {
+      focusSub.remove();
+    };
+  }, [getProducts]);
+
+  // get products from server
+  useEffect(() => {
     getProducts();
-  }, []);
+  }, [dispatch, getProducts]);
 
   // if loading, show loader, if not show flatlist
   if (isLoading) {
