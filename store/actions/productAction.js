@@ -1,7 +1,17 @@
 import Product from "../../models/product";
 
 export const deleteProduct = (productId) => {
-  return { type: "DELETE_PRODUCT", id: productId };
+  // send to reducer
+  return async (dispatch) => {
+    // delete request to database
+    await fetch(
+      `https://ecommerce-44026.firebaseio.com/products/${productId}.json`,
+      {
+        method: "DELETE",
+      }
+    );
+    dispatch({ type: "DELETE_PRODUCT", id: productId });
+  };
 };
 
 // create product - send to server and send to redux store
@@ -39,10 +49,27 @@ export const createProduct = (title, description, imageUrl, price) => {
 
 // update product
 export const updateProduct = (id, title, description, imageUrl, price) => {
-  return {
-    type: "UPDATE_PRODUCT",
-    productId: id,
-    productData: { title, description, imageUrl, price },
+  return async (dispatch) => {
+    // send to server
+    await fetch(`https://ecommerce-44026.firebaseio.com/products/${id}.json`, {
+      method: "PATCH", // only update in specific place
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        imageUrl,
+        price,
+      }),
+    });
+
+    // dispatch to reducer
+    dispatch({
+      type: "UPDATE_PRODUCT",
+      productId: id,
+      productData: { title, description, imageUrl, price },
+    });
   };
 };
 
