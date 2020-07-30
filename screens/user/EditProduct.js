@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,6 +48,7 @@ const formReducer = (state, action) => {
 };
 
 const EditProduct = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const productId = props.navigation.getParam("productId");
   const editedProduct = useSelector((state) =>
@@ -70,13 +72,14 @@ const EditProduct = (props) => {
     formIsValid: editedProduct ? true : false,
   });
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
       Alert.alert("Error", "Wrong Input", [{ text: "Ok" }]);
       return;
     }
+    setIsLoading(true);
     if (editedProduct) {
-      dispatch(
+      await dispatch(
         updateProduct(
           productId,
           formState.inputValues.title,
@@ -85,9 +88,10 @@ const EditProduct = (props) => {
           +formState.inputValues.price
         )
       );
+      setIsLoading(false);
       props.navigation.goBack();
     } else {
-      dispatch(
+      await dispatch(
         createProduct(
           formState.inputValues.title,
           formState.inputValues.description,
@@ -115,6 +119,15 @@ const EditProduct = (props) => {
     },
     [dispatchForm]
   );
+
+  // if loading
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -175,6 +188,11 @@ const styles = StyleSheet.create({
     padding: 5,
     borderBottomColor: "lightgray",
     borderBottomWidth: 1,
+  },
+  loading: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
 });
 
