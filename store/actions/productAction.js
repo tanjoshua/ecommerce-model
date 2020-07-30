@@ -35,6 +35,7 @@ export const createProduct = (title, description, imageUrl, price) => {
       }
     );
 
+    // use response as id
     const data = await response.json();
 
     console.log(data);

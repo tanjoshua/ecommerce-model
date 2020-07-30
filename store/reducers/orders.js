@@ -8,10 +8,10 @@ export default orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_ORDER":
       const newOrder = new Order(
-        new Date().toString(),
+        action.id,
         action.items,
         action.cost,
-        new Date()
+        action.date
       );
       return {
         ...state,
