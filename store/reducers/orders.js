@@ -17,6 +17,11 @@ export default orderReducer = (state = initialState, action) => {
         ...state,
         orders: state.orders.concat(newOrder),
       };
+    case "SET_ORDERS":
+      return {
+        ...state,
+        orders: action.orders,
+      };
     default:
       return state;
   }

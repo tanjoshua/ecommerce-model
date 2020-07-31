@@ -18,6 +18,7 @@ import Colors from "../../constants/Colors";
 // component
 const ProductsOverView = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   // get dispatch function
   const dispatch = useDispatch();
 
@@ -61,9 +62,9 @@ const ProductsOverView = (props) => {
   // get products from server
   // async function to fetch products
   const getProducts = useCallback(async () => {
-    setIsLoading(true);
+    setIsRefreshing(true);
     await dispatch(fetchProducts());
-    setIsLoading(false);
+    setIsRefreshing(false);
   }, [dispatch, setIsLoading]);
 
   // update drawer navigator if products are changed
@@ -78,7 +79,8 @@ const ProductsOverView = (props) => {
 
   // get products from server
   useEffect(() => {
-    getProducts();
+    setIsLoading(true);
+    getProducts().then(() => setIsLoading(false));
   }, [dispatch, getProducts]);
 
   // if loading, show loader, if not show flatlist
@@ -95,7 +97,14 @@ const ProductsOverView = (props) => {
       </View>
     );
   } else {
-    return <FlatList data={products} renderItem={renderProduct} />;
+    return (
+      <FlatList
+        onRefresh={getProducts}
+        refreshing={isRefreshing}
+        data={products}
+        renderItem={renderProduct}
+      />
+    );
   }
 };
 

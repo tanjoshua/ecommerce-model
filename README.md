@@ -11,3 +11,4 @@ Created with help from the course "React Native - The Practical Guide 2020"
 4. Redux thunk + using fetch to communicate with firebase server
 5. setting up a loading screen with useState and async functions
 6. Use a navigation listener to refresh page whenever we open page with drawer nav
+7. Refresh page by scrolling up, using FlatList's onRefresh and refreshing

@@ -1,3 +1,5 @@
+import Order from "../../models/order";
+
 export const addOrder = (cartItems, totalCost) => {
   return async (dispatch) => {
     // get date
@@ -29,6 +31,37 @@ export const addOrder = (cartItems, totalCost) => {
       items: cartItems,
       cost: totalCost,
       date: date,
+    });
+  };
+};
+
+export const fetchOrders = () => {
+  return async (dispatch) => {
+    // get from database
+    const response = await fetch(
+      "https://ecommerce-44026.firebaseio.com/orders/u1.json",
+      {
+        method: "GET",
+      }
+    );
+
+    const data = await response.json();
+
+    // convert object response to array
+    const orders = [];
+    for (const key in data) {
+      orders.push(
+        new Order(
+          key,
+          data[key].cartItems,
+          data[key].totalCost,
+          new Date(data[key].date)
+        )
+      );
+    }
+    dispatch({
+      type: "SET_ORDERS",
+      orders: orders,
     });
   };
 };
