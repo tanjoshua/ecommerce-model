@@ -1,5 +1,5 @@
 import React from "react";
-
+import { createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import ProductsOverview from "../screens/shop/ProductsOverview";
@@ -8,6 +8,7 @@ import Cart from "../screens/shop/Cart";
 import Orders from "../screens/shop/Orders";
 import UserProducts from "../screens/user/UserProducts";
 import EditProduct from "../screens/user/EditProduct";
+import Authenticate from "../screens/user/Authenticate";
 
 import Colors from "../constants/Colors";
 import { createAppContainer } from "react-navigation";
@@ -75,4 +76,20 @@ const ShopNavigator = createDrawerNavigator({
   Admin: AdminNavigator,
 });
 
-export default createAppContainer(ShopNavigator);
+//stack navigator for authentication
+const AuthNavigator = createStackNavigator(
+  {
+    Auth: Authenticate,
+  },
+  {
+    defaultNavigationOptions: defaultNavOptions,
+  }
+);
+
+// switch navigator
+const MainNavigator = createSwitchNavigator({
+  Auth: AuthNavigator,
+  Shop: ShopNavigator,
+});
+
+export default createAppContainer(MainNavigator);
