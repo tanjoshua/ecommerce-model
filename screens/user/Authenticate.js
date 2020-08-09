@@ -3,7 +3,7 @@ import { ScrollView, View, Text, StyleSheet, Button } from "react-native";
 import Input from "../../components/UI/Input";
 import Colors from "../../constants/Colors";
 import { useDispatch } from "react-redux";
-import { signup } from "../../store/actions/authActions";
+import { signup, signin } from "../../store/actions/authActions";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -53,6 +53,14 @@ const Authenticate = (props) => {
     formIsValid: false,
   });
 
+  // if login button is pressed
+  const loginHandler = () => {
+    dispatch(
+      signin(formState.inputValues.email, formState.inputValues.password)
+    );
+  };
+
+  // if signup button is pressed
   const signupHandler = () => {
     dispatch(
       signup(formState.inputValues.email, formState.inputValues.password)
@@ -98,11 +106,15 @@ const Authenticate = (props) => {
             <Button
               title="Login"
               color={Colors.primary}
-              onPress={signupHandler}
+              onPress={loginHandler}
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button title="Sign Up" color={Colors.accent} onPress={() => {}} />
+            <Button
+              title="Sign Up"
+              color={Colors.accent}
+              onPress={signupHandler}
+            />
           </View>
         </ScrollView>
       </View>
