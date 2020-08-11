@@ -11,7 +11,7 @@ Created with help from the course "React Native - The Practical Guide 2020"
 - Create new listings/edit listings you created. All users will have access to the same database of listings
 - Sign up and login to user accounts
 
-# New React Native features/concepts I learned making this app
+# New React Native features/concepts I learned while making this app
 
 1. Handling store products - adding, deleting, editing
 2. Features + validation of TextInput
@@ -20,4 +20,4 @@ Created with help from the course "React Native - The Practical Guide 2020"
 5. setting up a loading screen with useState and async functions
 6. Use a navigation listener to refresh page whenever we open page with drawer nav
 7. Refresh page by scrolling up, using FlatList's onRefresh and refreshing
-8. Creating users with firebase authentication
+8. Creating accounts and logging in with firebase authentication (including error handling)

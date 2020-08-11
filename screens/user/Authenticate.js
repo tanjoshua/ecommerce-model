@@ -1,5 +1,12 @@
 import React, { useReducer, useCallback } from "react";
-import { ScrollView, View, Text, StyleSheet, Button } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Alert,
+} from "react-native";
 import Input from "../../components/UI/Input";
 import Colors from "../../constants/Colors";
 import { useDispatch } from "react-redux";
@@ -54,17 +61,25 @@ const Authenticate = (props) => {
   });
 
   // if login button is pressed
-  const loginHandler = () => {
-    dispatch(
-      signin(formState.inputValues.email, formState.inputValues.password)
-    );
+  const loginHandler = async () => {
+    try {
+      await dispatch(
+        signin(formState.inputValues.email, formState.inputValues.password)
+      );
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   // if signup button is pressed
-  const signupHandler = () => {
-    dispatch(
-      signup(formState.inputValues.email, formState.inputValues.password)
-    );
+  const signupHandler = async () => {
+    try {
+      await dispatch(
+        signup(formState.inputValues.email, formState.inputValues.password)
+      );
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   // change text handler for all inputs

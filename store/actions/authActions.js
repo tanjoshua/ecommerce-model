@@ -1,3 +1,5 @@
+import { Alert } from "react-native";
+
 export const signup = (email, password) => {
   return async (dispatch) => {
     // send to database
@@ -15,6 +17,20 @@ export const signup = (email, password) => {
         }),
       }
     );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorId = errorData.error.message;
+
+      let message = "something went wrong";
+
+      switch (errorId) {
+        case "EMAIL_EXISTS":
+          message = "email already exists";
+      }
+
+      throw new Error(message);
+    }
 
     const data = await response.json();
     console.log(data);
@@ -40,6 +56,21 @@ export const signin = (email, password) => {
         }),
       }
     );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorId = errorData.error.message;
+
+      let message = "something went wrong";
+      switch (errorId) {
+        case "EMAIL_NOT_FOUND":
+          message = "email could not be found";
+        case "INVALID_PASSWORD":
+          message = "password invalid";
+      }
+
+      throw new Error(message);
+    }
 
     const data = await response.json();
     console.log(data);
