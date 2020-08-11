@@ -1,13 +1,16 @@
 import Order from "../../models/order";
 
 export const addOrder = (cartItems, totalCost) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // get user token
+    const token = getState().auth.token;
+
     // get date
     const date = new Date();
 
     // send to database
     const response = await fetch(
-      "https://ecommerce-44026.firebaseio.com/orders/u1.json",
+      `https://ecommerce-44026.firebaseio.com/orders/u1.json?auth=${token}`,
       {
         method: "POST",
         headers: {
