@@ -1,9 +1,8 @@
-import { PRODUCTS } from "../../data/dummy-data";
 import Product from "../../models/product";
 
 const initialState = {
-  availableProducts: PRODUCTS,
-  productsByUser: PRODUCTS.filter((product) => product.ownerId === "u1"),
+  availableProducts: [],
+  productsByUser: [],
 };
 
 export default productsReducer = (state = initialState, action) => {
@@ -21,7 +20,7 @@ export default productsReducer = (state = initialState, action) => {
     case "CREATE_PRODUCT":
       const newProduct = new Product(
         action.productData.id,
-        "u1",
+        action.productData.userId,
         action.productData.title,
         action.productData.imageUrl,
         action.productData.description,
@@ -63,9 +62,7 @@ export default productsReducer = (state = initialState, action) => {
       return {
         ...state,
         availableProducts: action.products,
-        productsByUser: action.products.filter(
-          (product) => product.ownerId === "u1"
-        ),
+        productsByUser: action.productsByUser,
       };
   }
   return state;

@@ -21,8 +21,9 @@ export const deleteProduct = (productId) => {
 export const createProduct = (title, description, imageUrl, price) => {
   // return dispatch bc of redux thunk
   return async (dispatch, getState) => {
-    // get user token
+    // get user token & userId
     const token = getState().auth.token;
+    const userId = getState().auth.token;
 
     // send to database
     const response = await fetch(
@@ -37,6 +38,7 @@ export const createProduct = (title, description, imageUrl, price) => {
           description,
           imageUrl,
           price,
+          userId,
         }),
       }
     );
@@ -49,7 +51,14 @@ export const createProduct = (title, description, imageUrl, price) => {
     // dispatch to reducer
     dispatch({
       type: "CREATE_PRODUCT",
-      productData: { id: data.name, title, description, imageUrl, price },
+      productData: {
+        id: data.name,
+        title,
+        description,
+        imageUrl,
+        price,
+        userId,
+      },
     });
   };
 };
@@ -88,7 +97,10 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
 
 // set products - get all the products from server
 export const fetchProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // get userId
+    const userId = getState().auth.userId;
+
     // send to database
     const response = await fetch(
       "https://ecommerce-44026.firebaseio.com/products.json",
@@ -105,7 +117,7 @@ export const fetchProducts = () => {
       newProducts.push(
         new Product(
           key,
-          "u1",
+          userId,
           data[key].title,
           data[key].imageUrl,
           data[key].description,
@@ -115,6 +127,12 @@ export const fetchProducts = () => {
     }
 
     // dispatch products to store
-    dispatch({ type: "SET_PRODUCTS", products: newProducts });
+    dispatch({
+      type: "SET_PRODUCTS",
+      products: newProducts,
+      productsByUser: newProducts.filter(
+        (product) => product.ownerId === userId
+      ),
+    });
   };
 };
