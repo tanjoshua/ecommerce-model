@@ -102,6 +102,12 @@ export const authenticate = (token, userId) => {
   };
 };
 
+export const logout = () => {
+  return {
+    type: "LOGOUT",
+  };
+};
+
 // save user data
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(

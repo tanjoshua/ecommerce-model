@@ -17,6 +17,8 @@ export default authReducer = (state = initialState, action) => {
         token: action.token,
         userId: action.userId,
       };
+    case "LOGOUT":
+      return state;
     default:
       return state;
   }
