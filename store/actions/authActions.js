@@ -84,13 +84,32 @@ export const signin = (email, password) => {
       token: data.idToken,
       userId: data.localId,
     });
+
+    const expirationDate = new Date(
+      new Date().getTime() + parseInt(data.expiresIn) * 1000
+    );
+
+    saveDataToStorage(data.idToken, data.localId, expirationDate);
+  };
+};
+
+// auto login
+export const authenticate = (token, userId) => {
+  return {
+    type: "SIGNIN",
+    token: token,
+    userId: userId,
   };
 };
 
 // save user data
-const saveDataToStorage = (token, userId) => {
+const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     "userData",
-    JSON.stringify({ token: token, userId: userId })
+    JSON.stringify({
+      token: token,
+      userId: userId,
+      expirationDate: expirationDate.toISOString(),
+    })
   );
 };

@@ -9,6 +9,7 @@ import Orders from "../screens/shop/Orders";
 import UserProducts from "../screens/user/UserProducts";
 import EditProduct from "../screens/user/EditProduct";
 import Authenticate from "../screens/user/Authenticate";
+import Startup from "../screens/Startup";
 
 import Colors from "../constants/Colors";
 import { createAppContainer } from "react-navigation";
@@ -88,6 +89,7 @@ const AuthNavigator = createStackNavigator(
 
 // switch navigator
 const MainNavigator = createSwitchNavigator({
+  Startup: Startup,
   Auth: AuthNavigator,
   Shop: ShopNavigator,
 });
