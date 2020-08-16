@@ -22,8 +22,9 @@ export const createProduct = (title, description, imageUrl, price) => {
   // return dispatch bc of redux thunk
   return async (dispatch, getState) => {
     // get user token & userId
+    console.log(getState());
     const token = getState().auth.token;
-    const userId = getState().auth.token;
+    const userId = getState().auth.userId;
 
     // send to database
     const response = await fetch(
@@ -98,7 +99,6 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
 // set products - get all the products from server
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
-    // get userId
     const userId = getState().auth.userId;
 
     // send to database
@@ -117,7 +117,7 @@ export const fetchProducts = () => {
       newProducts.push(
         new Product(
           key,
-          userId,
+          data[key].userId,
           data[key].title,
           data[key].imageUrl,
           data[key].description,

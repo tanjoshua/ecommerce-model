@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import { AsyncStorage } from "react-native";
 
 export const signup = (email, password) => {
   return async (dispatch) => {
@@ -77,12 +78,19 @@ export const signin = (email, password) => {
     }
 
     const data = await response.json();
-    console.log(data);
 
     dispatch({
       type: "SIGNIN",
-      token: response.idToken,
-      userId: response.localId,
+      token: data.idToken,
+      userId: data.localId,
     });
   };
+};
+
+// save user data
+const saveDataToStorage = (token, userId) => {
+  AsyncStorage.setItem(
+    "userData",
+    JSON.stringify({ token: token, userId: userId })
+  );
 };

@@ -21,3 +21,4 @@ Created with help from the course "React Native - The Practical Guide 2020"
 6. Use a navigation listener to refresh page whenever we open page with drawer nav
 7. Refresh page by scrolling up, using FlatList's onRefresh and refreshing
 8. Creating accounts and logging in with firebase authentication (including error handling)
+9. Auto login feature using AsyncStorage
