@@ -1,6 +1,8 @@
 import { Alert } from "react-native";
 import { AsyncStorage } from "react-native";
 
+let timer;
+
 export const signup = (email, password) => {
   return async (dispatch) => {
     // send to database
@@ -36,11 +38,15 @@ export const signup = (email, password) => {
     const data = await response.json();
     console.log(data);
 
-    dispatch({
-      type: "SIGNUP",
-      token: response.idToken,
-      userId: response.localId,
-    });
+    dispatch(
+      authenticate(data.idToken, data.localId, parseInt(data.expiresIn) * 1000)
+    );
+
+    const expirationDate = new Date(
+      new Date().getTime() + parseInt(data.expiresIn) * 1000
+    );
+
+    saveDataToStorage(data.idToken, data.localId, expirationDate);
   };
 };
 
@@ -79,11 +85,9 @@ export const signin = (email, password) => {
 
     const data = await response.json();
 
-    dispatch({
-      type: "SIGNIN",
-      token: data.idToken,
-      userId: data.localId,
-    });
+    dispatch(
+      authenticate(data.idToken, data.localId, parseInt(data.expiresIn) * 1000)
+    );
 
     const expirationDate = new Date(
       new Date().getTime() + parseInt(data.expiresIn) * 1000
@@ -94,17 +98,37 @@ export const signin = (email, password) => {
 };
 
 // auto login
-export const authenticate = (token, userId) => {
-  return {
-    type: "SIGNIN",
-    token: token,
-    userId: userId,
+export const authenticate = (token, userId, expirationTime) => {
+  // set logout timer and signin
+  return (dispatch) => {
+    dispatch(setLogoutTimer(expirationTime));
+    dispatch({
+      type: "AUTHENTICATE",
+      token: token,
+      userId: userId,
+    });
   };
 };
 
 export const logout = () => {
+  clearLogoutTimer();
+  AsyncStorage.removeItem("userData");
   return {
     type: "LOGOUT",
+  };
+};
+
+const clearLogoutTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+  }
+};
+
+const setLogoutTimer = (expirationTime) => {
+  return (dispatch) => {
+    timer = setTimeout(() => {
+      dispatch(logout());
+    }, expirationTime);
   };
 };
 

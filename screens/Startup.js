@@ -33,8 +33,12 @@ const Startup = (props) => {
       // token is valid
       props.navigation.navigate("Shop");
 
+      // calculate how much time left for token
+      const expirationTime =
+        new Date(expirationDate).getTime() - new Date().getTime();
+
       // log user in
-      dispatch(authenticate(token, userId));
+      dispatch(authenticate(token, userId, expirationTime));
     };
 
     tryLogin();

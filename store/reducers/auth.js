@@ -5,20 +5,14 @@ const initialState = {
 
 export default authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SIGNUP":
-      return {
-        ...state,
-        token: action.token,
-        userId: action.userId,
-      };
-    case "SIGNIN":
+    case "AUTHENTICATE":
       return {
         ...state,
         token: action.token,
         userId: action.userId,
       };
     case "LOGOUT":
-      return state;
+      return initialState;
     default:
       return state;
   }
