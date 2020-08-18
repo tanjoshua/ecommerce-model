@@ -10,6 +10,7 @@ Created with help from the course "React Native - The Practical Guide 2020"
 - View past orders
 - Create new listings/edit listings you created. All users will have access to the same database of listings
 - Sign up and login to user accounts
+- Auto login and auto logout after token expiry
 
 # New React Native features/concepts I learned while making this app
 
