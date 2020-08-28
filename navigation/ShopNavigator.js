@@ -1,8 +1,8 @@
 import React from "react";
-import { createSwitchNavigator } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
-import ProductsOverview from "../screens/shop/ProductsOverview";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+import ProductsOverview, { navOptions } from "../screens/shop/ProductsOverview";
 import ProductDetails from "../screens/shop/ProductDetails";
 import Cart from "../screens/shop/Cart";
 import Orders from "../screens/shop/Orders";
@@ -28,6 +28,22 @@ const defaultNavOptions = {
 };
 
 // stack nav for products
+const ProductsStack = createStackNavigator();
+
+export const ProductsNavigator = () => {
+  return (
+    <ProductsStack.Navigator screenOptions={defaultNavOptions}>
+      <ProductsStack.Screen
+        name="ProductsOverview"
+        component={ProductsOverview}
+        options={navOptions}
+      />
+      <ProductsStack.Screen name="ProductDetails" component={ProductDetails} />
+      <ProductsStack.Screen name="Cart" component={Cart} />
+    </ProductsStack.Navigator>
+  );
+};
+
 const ProductsNavigator = createStackNavigator(
   {
     ProductsOverview: ProductsOverview,

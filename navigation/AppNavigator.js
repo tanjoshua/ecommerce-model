@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import ShopNavigator from "./ShopNavigator";
+import { ProductsNavigator } from "./ShopNavigator";
 import ProductsOverview from "../screens/shop/ProductsOverview";
 
 const ProductNav = createStackNavigator();
@@ -14,12 +14,7 @@ const AppNavigator = (props) => {
 
   return (
     <NavigationContainer>
-      <ProductNav.Navigator>
-        <ProductNav.Screen
-          name="ProductsOverview"
-          component={ProductsOverview}
-        />
-      </ProductNav.Navigator>
+      <ProductsNavigator />
     </NavigationContainer>
   );
 };

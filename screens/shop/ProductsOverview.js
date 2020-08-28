@@ -16,7 +16,7 @@ import HeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
 
 // component
-const ProductsOverView = (props) => {
+const ProductsOverview = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   // get dispatch function
@@ -109,7 +109,7 @@ const ProductsOverView = (props) => {
 };
 
 // set nav options
-ProductsOverView.navigationOptions = (navData) => {
+export const navOptions = (navData) => {
   return {
     headerTitle: "Products",
 
@@ -146,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductsOverView;
+export default ProductsOverview;
