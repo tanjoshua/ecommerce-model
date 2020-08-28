@@ -28,7 +28,7 @@ const Orders = (props) => {
   );
 };
 
-Orders.navigationOptions = (navData) => {
+export const navOptions = (navData) => {
   return {
     // add drawer
     headerLeft: () => (

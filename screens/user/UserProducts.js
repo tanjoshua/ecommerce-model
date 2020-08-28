@@ -53,7 +53,7 @@ const UserProducts = (props) => {
   );
 };
 
-UserProducts.navigationOptions = (navData) => {
+export const navOptions = (navData) => {
   return {
     headerTitle: "Your products",
     // add drawer

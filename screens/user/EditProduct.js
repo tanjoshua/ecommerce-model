@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
 });
 
-EditProduct.navigationOptions = (navData) => {
+export const navOptions = (navData) => {
   const submit = navData.navigation.getParam("submit");
 
   return {

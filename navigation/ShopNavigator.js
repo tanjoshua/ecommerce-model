@@ -2,12 +2,20 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import ProductsOverview, { navOptions } from "../screens/shop/ProductsOverview";
-import ProductDetails from "../screens/shop/ProductDetails";
+import ProductsOverview, {
+  navOptions as productsOverviewOptions,
+} from "../screens/shop/ProductsOverview";
+import ProductDetails, {
+  navOptions as productDetailsOptions,
+} from "../screens/shop/ProductDetails";
 import Cart from "../screens/shop/Cart";
-import Orders from "../screens/shop/Orders";
-import UserProducts from "../screens/user/UserProducts";
-import EditProduct from "../screens/user/EditProduct";
+import Orders, { navOptions as ordersOptions } from "../screens/shop/Orders";
+import UserProducts, {
+  navOptions as userProductsOptions,
+} from "../screens/user/UserProducts";
+import EditProduct, {
+  navOptions as editProductOptions,
+} from "../screens/user/EditProduct";
 import Authenticate from "../screens/user/Authenticate";
 import Startup from "../screens/Startup";
 
@@ -18,6 +26,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, SafeAreaView, Button } from "react-native";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/actions/authActions";
+import orders from "../store/reducers/orders";
 
 // const default nav options
 const defaultNavOptions = {
@@ -36,9 +45,13 @@ export const ProductsNavigator = () => {
       <ProductsStack.Screen
         name="ProductsOverview"
         component={ProductsOverview}
-        options={navOptions}
+        options={productsOverviewOptions}
       />
-      <ProductsStack.Screen name="ProductDetails" component={ProductDetails} />
+      <ProductsStack.Screen
+        name="ProductDetails"
+        component={ProductDetails}
+        options={productDetailsOptions}
+      />
       <ProductsStack.Screen name="Cart" component={Cart} />
     </ProductsStack.Navigator>
   );
@@ -61,6 +74,18 @@ const ProductsNavigator = createStackNavigator(
 );
 
 //stack nav for orders
+const OrdersStack = createStackNavigator();
+const OrdersNavigator = () => {
+  return (
+    <OrdersStack.Navigator screenOptions={defaultNavOptions}>
+      <OrdersStack.Screen
+        name="Orders"
+        component={Orders}
+        options={ordersOptions}
+      />
+    </OrdersStack.Navigator>
+  );
+};
 const OrdersNavigator = createStackNavigator(
   {
     Orders: Orders,
@@ -76,6 +101,23 @@ const OrdersNavigator = createStackNavigator(
 );
 
 //stack nav for user
+const AdminStack = createStackNavigator();
+const AdminNavigator = () => {
+  return (
+    <AdminStack.Navigator screenOptions={defaultNavOptions}>
+      <AdminStack.Screen
+        name="UserProducts"
+        component={UserProducts}
+        options={userProductsOptions}
+      />
+      <AdminStack.Screen
+        name="EditProduct"
+        component={EditProduct}
+        options={editProductOptions}
+      />
+    </AdminStack.Navigator>
+  );
+};
 const AdminNavigator = createStackNavigator(
   {
     UserProducts: UserProducts,
