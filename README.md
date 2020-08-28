@@ -11,6 +11,11 @@ Created with help from the course "React Native - The Practical Guide 2020"
 - Create new listings/edit listings you created. All users will have access to the same database of listings
 - Sign up and login to user accounts
 
+# Credentials for testing
+
+Username: test@gmail.com
+Password: password
+
 # New React Native features/concepts I learned while making this app
 
 1. Handling store products - adding, deleting, editing.
@@ -23,3 +28,7 @@ Created with help from the course "React Native - The Practical Guide 2020"
 8. Creating accounts and logging in with firebase authentication (including error handling).
 9. Auto login feature using AsyncStorage.
 10. Auto logout after token expiry using a navigation container to check if authentication is gone.
+
+# Updates
+
+1. Migrated from React Navigation 4 to React Navigation 5
