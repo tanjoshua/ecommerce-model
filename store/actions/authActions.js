@@ -3,6 +3,12 @@ import { AsyncStorage } from "react-native";
 
 let timer;
 
+export const setTriedAutoLogin = () => {
+  return {
+    type: "SET_TAL",
+  };
+};
+
 export const signup = (email, password) => {
   return async (dispatch) => {
     // send to database

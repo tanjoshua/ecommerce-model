@@ -5,7 +5,7 @@ import {
   StyleSheet,
   AsyncStorage,
 } from "react-native";
-import { authenticate } from "../store/actions/authActions";
+import { authenticate, setTriedAutoLogin } from "../store/actions/authActions";
 import { useDispatch } from "react-redux";
 
 const Startup = (props) => {
@@ -16,7 +16,7 @@ const Startup = (props) => {
       const userData = await AsyncStorage.getItem("userData");
 
       if (!userData) {
-        props.navigation.navigate("Auth");
+        dispatch(setTriedAutoLogin());
         return;
       }
       // convert from string to js object
@@ -26,13 +26,11 @@ const Startup = (props) => {
 
       // check if token is valid
       if (new Date(expirationDate) <= new Date() || !token || !userId) {
-        props.navigation.navigate("Auth");
+        dispatch(setTriedAutoLogin());
         return;
       }
 
       // token is valid
-      props.navigation.navigate("Shop");
-
       // calculate how much time left for token
       const expirationTime =
         new Date(expirationDate).getTime() - new Date().getTime();
