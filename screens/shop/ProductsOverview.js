@@ -69,11 +69,11 @@ const ProductsOverview = (props) => {
 
   // update drawer navigator if products are changed
   useEffect(() => {
-    const focusSub = props.navigation.addListener("willFocus", getProducts);
+    const unsub = props.navigation.addListener("focus", getProducts);
 
     // clean up function to remove listener after component is gone
     return () => {
-      focusSub.remove();
+      unsub();
     };
   }, [getProducts]);
 

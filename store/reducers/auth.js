@@ -19,7 +19,7 @@ export default authReducer = (state = initialState, action) => {
         triedAutoLogin: true,
       };
     case "LOGOUT":
-      return initialState;
+      return { ...initialState, triedAutoLogin: true };
     default:
       return state;
   }

@@ -64,7 +64,7 @@ export const ProductsNavigator = () => {
 
 //stack nav for orders
 const OrdersStack = createStackNavigator();
-const OrdersNavigator = () => {
+export const OrdersNavigator = () => {
   return (
     <OrdersStack.Navigator screenOptions={defaultNavOptions}>
       <OrdersStack.Screen
@@ -78,7 +78,7 @@ const OrdersNavigator = () => {
 
 //stack nav for user
 const AdminStack = createStackNavigator();
-const AdminNavigator = () => {
+export const AdminNavigator = () => {
   return (
     <AdminStack.Navigator screenOptions={defaultNavOptions}>
       <AdminStack.Screen
@@ -98,7 +98,7 @@ const AdminNavigator = () => {
 // drawer navigator for shop
 const ShopDrawer = createDrawerNavigator();
 
-const ShopNavigator = () => {
+export const ShopNavigator = () => {
   const dispatch = useDispatch();
   return (
     <ShopDrawer.Navigator
@@ -151,7 +151,7 @@ const ShopNavigator = () => {
 
 //stack navigator for authentication
 const AuthStack = createStackNavigator();
-const AuthNavigator = () => {
+export const AuthNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={defaultNavOptions}>
       <AuthStack.Screen
@@ -162,12 +162,3 @@ const AuthNavigator = () => {
     </AuthStack.Navigator>
   );
 };
-
-// switch navigator
-const MainNavigator = createSwitchNavigator({
-  Startup: Startup,
-  Auth: AuthNavigator,
-  Shop: ShopNavigator,
-});
-
-export default createAppContainer(MainNavigator);

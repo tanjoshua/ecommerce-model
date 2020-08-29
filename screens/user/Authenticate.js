@@ -66,7 +66,6 @@ const Authenticate = (props) => {
       await dispatch(
         signin(formState.inputValues.email, formState.inputValues.password)
       );
-      props.navigation.navigate("Shop");
     } catch (error) {
       Alert.alert(error.message);
     }
