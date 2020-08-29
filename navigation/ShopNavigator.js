@@ -19,7 +19,9 @@ import UserProducts, {
 import EditProduct, {
   navOptions as editProductOptions,
 } from "../screens/user/EditProduct";
-import Authenticate from "../screens/user/Authenticate";
+import Authenticate, {
+  navOptions as authenticateOptions,
+} from "../screens/user/Authenticate";
 import Startup from "../screens/Startup";
 
 import Colors from "../constants/Colors";
@@ -148,14 +150,18 @@ const ShopNavigator = () => {
 };
 
 //stack navigator for authentication
-const AuthNavigator = createStackNavigator(
-  {
-    Auth: Authenticate,
-  },
-  {
-    defaultNavigationOptions: defaultNavOptions,
-  }
-);
+const AuthStack = createStackNavigator();
+const AuthNavigator = () => {
+  return (
+    <AuthStack.Navigator screenOptions={defaultNavOptions}>
+      <AuthStack.Screen
+        name="Auth"
+        component={Authenticate}
+        options={authenticateOptions}
+      />
+    </AuthStack.Navigator>
+  );
+};
 
 // switch navigator
 const MainNavigator = createSwitchNavigator({

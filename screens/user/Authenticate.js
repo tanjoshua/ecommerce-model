@@ -138,7 +138,7 @@ const Authenticate = (props) => {
   );
 };
 
-Authenticate.navigationOptions = {
+export const navOptions = {
   headerTitle: "Log In",
 };
 
