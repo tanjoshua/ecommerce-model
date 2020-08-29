@@ -137,11 +137,52 @@ const AdminNavigator = createStackNavigator(
 const ShopDrawer = createDrawerNavigator();
 
 const ShopNavigator = () => {
+  const dispatch = useDispatch();
   return (
-    <ShopDrawer.Navigator>
-      <ShopDrawer.Screen name="Products" component={ProductsNavigator} />
-      <ShopDrawer.Screen name="Orders" component={OrdersNavigator} />
-      <ShopDrawer.Screen name="Admin" component={AdminNavigator} />
+    <ShopDrawer.Navigator
+      drawerContent={(props) => {
+        return (
+          <View style={{ flex: 1, paddingTop: 35 }}>
+            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+              <DrawerItems {...props} />
+              <Button
+                title="logout"
+                onPress={() => {
+                  dispatch(logout());
+                }}
+              />
+            </SafeAreaView>
+          </View>
+        );
+      }}
+    >
+      <ShopDrawer.Screen
+        name="Products"
+        component={ProductsNavigator}
+        options={{
+          drawerIcon: (props) => (
+            <Ionicons name="md-cart" size={20} color={props.color} />
+          ),
+        }}
+      />
+      <ShopDrawer.Screen
+        name="Orders"
+        component={OrdersNavigator}
+        options={{
+          drawerIcon: (props) => (
+            <Ionicons name="md-list" size={20} color={props.color} />
+          ),
+        }}
+      />
+      <ShopDrawer.Screen
+        name="Admin"
+        component={AdminNavigator}
+        options={{
+          drawerIcon: (props) => (
+            <Ionicons name="md-create" size={20} color={props.color} />
+          ),
+        }}
+      />
     </ShopDrawer.Navigator>
   );
 };
