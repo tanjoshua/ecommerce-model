@@ -50,7 +50,7 @@ const formReducer = (state, action) => {
 const EditProduct = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const productId = props.navigation.getParam("productId");
+  const productId = props.route.params ? props.route.params.productId : null;
   const editedProduct = useSelector((state) =>
     state.products.productsByUser.find((product) => product.id === productId)
   );
@@ -197,12 +197,13 @@ const styles = StyleSheet.create({
 });
 
 export const navOptions = (navData) => {
-  const submit = navData.navigation.getParam("submit");
+  const routeParams = navData.route.params ? navData.route.params : {};
+
+  const submit = routeParams.submit;
+  const productId = routeParams.productId;
 
   return {
-    headerTitle: navData.navigation.getParam("productId")
-      ? "Edit Product"
-      : "Add product",
+    headerTitle: productId ? "Edit Product" : "Add product",
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item title="Save" iconName="md-checkmark" onPress={submit} />
