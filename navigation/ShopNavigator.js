@@ -1,6 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 
 import ProductsOverview, {
   navOptions as productsOverviewOptions,
@@ -57,22 +60,6 @@ export const ProductsNavigator = () => {
   );
 };
 
-const ProductsNavigator = createStackNavigator(
-  {
-    ProductsOverview: ProductsOverview,
-    ProductDetails: ProductDetails,
-    Cart: Cart,
-  },
-  {
-    // navigation options as a screen
-    navigationOptions: {
-      drawerIcon: (drawerConfig) => <Ionicons name="md-cart" size={20} />,
-    },
-    //default options (for display)
-    defaultNavigationOptions: defaultNavOptions,
-  }
-);
-
 //stack nav for orders
 const OrdersStack = createStackNavigator();
 const OrdersNavigator = () => {
@@ -86,19 +73,6 @@ const OrdersNavigator = () => {
     </OrdersStack.Navigator>
   );
 };
-const OrdersNavigator = createStackNavigator(
-  {
-    Orders: Orders,
-  },
-  {
-    // navigation options as a screen
-    navigationOptions: {
-      drawerIcon: (drawerConfig) => <Ionicons name="md-list" size={20} />,
-    },
-    //default options (for display)
-    defaultNavigationOptions: defaultNavOptions,
-  }
-);
 
 //stack nav for user
 const AdminStack = createStackNavigator();
@@ -118,20 +92,6 @@ const AdminNavigator = () => {
     </AdminStack.Navigator>
   );
 };
-const AdminNavigator = createStackNavigator(
-  {
-    UserProducts: UserProducts,
-    EditProduct: EditProduct,
-  },
-  {
-    // navigation options as a screen
-    navigationOptions: {
-      drawerIcon: (drawerConfig) => <Ionicons name="md-create" size={20} />,
-    },
-    //default options (for display)
-    defaultNavigationOptions: defaultNavOptions,
-  }
-);
 
 // drawer navigator for shop
 const ShopDrawer = createDrawerNavigator();
@@ -144,7 +104,7 @@ const ShopNavigator = () => {
         return (
           <View style={{ flex: 1, paddingTop: 35 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-              <DrawerItems {...props} />
+              <DrawerItemList {...props} />
               <Button
                 title="logout"
                 onPress={() => {
@@ -186,32 +146,6 @@ const ShopNavigator = () => {
     </ShopDrawer.Navigator>
   );
 };
-
-const ShopNavigator = createDrawerNavigator(
-  {
-    Products: ProductsNavigator,
-    Orders: OrdersNavigator,
-    Admin: AdminNavigator,
-  },
-  {
-    contentComponent: (props) => {
-      const dispatch = useDispatch();
-      return (
-        <View style={{ flex: 1, paddingTop: 35 }}>
-          <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-            <DrawerItems {...props} />
-            <Button
-              title="logout"
-              onPress={() => {
-                dispatch(logout());
-              }}
-            />
-          </SafeAreaView>
-        </View>
-      );
-    },
-  }
-);
 
 //stack navigator for authentication
 const AuthNavigator = createStackNavigator(
