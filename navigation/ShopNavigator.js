@@ -133,6 +133,19 @@ const AdminNavigator = createStackNavigator(
   }
 );
 
+// drawer navigator for shop
+const ShopDrawer = createDrawerNavigator();
+
+const ShopNavigator = () => {
+  return (
+    <ShopDrawer.Navigator>
+      <ShopDrawer.Screen name="Products" component={ProductsNavigator} />
+      <ShopDrawer.Screen name="Orders" component={OrdersNavigator} />
+      <ShopDrawer.Screen name="Admin" component={AdminNavigator} />
+    </ShopDrawer.Navigator>
+  );
+};
+
 const ShopNavigator = createDrawerNavigator(
   {
     Products: ProductsNavigator,
