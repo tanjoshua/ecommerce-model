@@ -104,7 +104,13 @@ const EditProduct = (props) => {
   }, [productId, formState]);
 
   useEffect(() => {
-    props.navigation.setParams({ submit: submitHandler });
+    props.navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item title="Save" iconName="md-checkmark" onPress={submitHandler} />
+        </HeaderButtons>
+      ),
+    });
   }, [submitHandler]);
 
   // change text handler for all inputs
@@ -198,17 +204,10 @@ const styles = StyleSheet.create({
 
 export const navOptions = (navData) => {
   const routeParams = navData.route.params ? navData.route.params : {};
-
-  const submit = routeParams.submit;
   const productId = routeParams.productId;
 
   return {
     headerTitle: productId ? "Edit Product" : "Add product",
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Save" iconName="md-checkmark" onPress={submit} />
-      </HeaderButtons>
-    ),
   };
 };
 

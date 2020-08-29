@@ -16,7 +16,7 @@ const ProductDetails = (props) => {
   //get dispatch function
   const dispatch = useDispatch();
 
-  const productId = props.navigation.getParam("productId");
+  const productId = props.route.params.productId;
   const product = useSelector((state) =>
     state.products.availableProducts.find((product) => product.id === productId)
   );
@@ -39,7 +39,7 @@ const ProductDetails = (props) => {
 };
 
 export const navOptions = (navData) => {
-  const productTitle = navData.navigation.getParam("productTitle");
+  const productTitle = navData.route.params.productTitle;
   return {
     headerTitle: productTitle,
   };
