@@ -30,6 +30,7 @@ Password: password
 8. Creating accounts and logging in with firebase authentication (including error handling).
 9. Auto login feature using AsyncStorage.
 10. Auto logout after token expiry using a navigation container to check if authentication is gone.
+11. How to use/update application to React Navigation 5
 
 # Updates
 
